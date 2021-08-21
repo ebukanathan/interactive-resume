@@ -5,6 +5,16 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 4030;
 const ejs = require('ejs')
+const path = require('path')
+
+
+app.use(express.static('public'));
+app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
+app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
+app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
+
+
+
 
 
 
@@ -15,9 +25,10 @@ app.use(bodyParser.json())
 app.set("view engine", "ejs")
 
 
+
 //create and connect to  db
 
-const MongoURI = 'mongodb://localhost:27017/contact';
+const MongoURI = 'mongodb+srv://lydia:muna19@cluster0.mw7lp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'||'mongodb://localhost:27017/contact';
 
 mongoose.connect(MongoURI,{
     useNewUrlParser:true,
@@ -56,9 +67,9 @@ const contactSchema = new mongoose.Schema({
  const Contact = mongoose.model('Contact',contactSchema);
 
 
- //app.get('/',(req,res)=>{
-  //  return res.render("land")
- //})
+ app.get('/',(req,res)=>{
+   return res.render("app")
+ })
 
 
  //create user record
@@ -87,7 +98,7 @@ app.post('/contact',(req,res)=>{
                 if(err){
                     return res.status(500).json({ err })
                 }else{
-                    return res.sendFile(path.join(__dirname+'/contact.html'))
+                    return res.render("contact",{newContact})
                     
                 }
 
