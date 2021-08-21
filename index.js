@@ -3,9 +3,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
-const port = 3000;
+
 const ejs = require('ejs')
 const path = require('path')
+const port_number = process.env.PORT || 3000
+
 
 
 app.use(express.static('public'));
@@ -110,8 +112,8 @@ app.post('/contact',(req,res)=>{
 
 })
 
-app.listen(port,()=>{
-    console.log(`the server is listening on port : ${port}`)})
+app.listen(port_number,()=>{
+    console.log(`the server is listening on port : ${port_number}`)})
 
 
 
